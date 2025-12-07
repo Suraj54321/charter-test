@@ -1,206 +1,254 @@
-# charter-test
-<html>
-            <li>View customers and their monthly reward points</li>
-            <li> Search customers by name</li>
-            <li>Sort customers by total rewards or alphabetical order</li>
-            <li>Pagination with next/previous navigation</li>
-            <li>Export individual customer transactions as a downloadable PDF</li>
-            <li>Fully tested using Vitest with mocked data</li>
-            <li>Reward points calculated based on business logic</li>
-            <li>Clean UI with responsive layout</li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Rewards Dashboard - Documentation</title>
+</head>
+<body>
+
+<h1>🏆 Customer Rewards Dashboard</h1>
+
+<p>A React-based dashboard that displays customer transactions, calculates reward points, supports search, sorting, pagination, and allows PDF download of customer transaction reports.</p>
+
+<hr>
+
+<h2>📌 Table of Contents</h2>
+<ul>
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#features">Features</a></li>
+  <li><a href="#project-setup">Project Setup</a></li>
+  <li><a href="#running-the-app">Running the App</a></li>
+  <li><a href="#viewing-customers-rewards">Viewing Customers & Rewards</a></li>
+  <li><a href="#reward-calculation-logic">Reward Calculation Logic</a></li>
+  <li><a href="#search-customers">Search Customers</a></li>
+  <li><a href="#reset-search">Reset Search</a></li>
+  <li><a href="#sorting-customers">Sorting Customers</a></li>
+  <li><a href="#pagination">Pagination</a></li>
+  <li><a href="#download-pdf">Download PDF</a></li>
+  <li><a href="#running-tests">Running Tests</a></li>
+  <li><a href="#project-structure">Project Structure</a></li>
+</ul>
+
+<hr>
+
+<h2 id="overview">📘 Overview</h2>
+<p>This project is a simple and clean <strong>Reward Points Dashboard</strong> used by retailers to track customer purchases and reward points.</p>
+
+<hr>
+
+<h2 id="features">✨ Features</h2>
+<ul>
+  <li>View customer list with total rewards</li>
+  <li>View individual transaction history</li>
+  <li>Search customers by name</li>
+  <li>Sort customers</li>
+  <li>Pagination</li>
+  <li>Export customer report as PDF</li>
+  <li>Well-tested reward point logic</li>
+  <li>Clean UI with responsive layout</li>
+</ul>
+
+<hr>
+
+<h2 id="project-setup">🛠 Project Setup</h2>
+
+<h3>1️⃣ Install Dependencies</h3>
+<pre><code>npm install</code></pre>
+
+<h3>2️⃣ Start Development Server</h3>
+<pre><code>npm run dev</code></pre>
+
+<p>The app will open at:</p>
+<p><strong>👉 http://localhost:5173</strong></p>
+
+<hr>
+
+<h2 id="viewing-customers-rewards">👀 Viewing Customers & Rewards</h2>
+
+<p>When the app loads, you will see:</p>
+
+<ul>
+  <li>Customer Name</li>
+  <li>Total Reward Points</li>
+  <li>Buttons:
+    <ul>
+      <li>View Transactions</li>
+      <li>Download PDF</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="box">
+<pre>
+---------------------------------------
+| John Doe     | Total Rewards: 120   |
+|--------------------------------------|
+| Sarah Lee    | Total Rewards: 200   |
+|--------------------------------------|
+| Mike Ross    | Total Rewards: 75    |
+---------------------------------------
+</pre>
+</div>
+
+<hr>
+
+<h2 id="reward-calculation-logic">🧮 Reward Calculation Logic</h2>
+
+<p>The reward rules are:</p>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Transaction Amount</th>
+    <th>Reward Points</th>
+  </tr>
+  <tr>
+    <td>Amount > 100</td>
+    <td>2 points per $1 above 100</td>
+  </tr>
+  <tr>
+    <td>Amount > 50</td>
+    <td>1 point per $1 above 50</td>
+  </tr>
+</table>
 
-🚀 Getting Started
+<h3>Example:</h3>
 
-1. Clone the repository
-    <li><ul>git clone https://github.com/your-repo/reward-dashboard.git</ul></li>
-    cd reward-dashboard
+<p>If a user spends <strong>$120</strong>:</p>
+<ul>
+  <li>$50 → No points</li>
+  <li>$50 to $100 → 50 × 1 = 50 points</li>
+  <li>Above $100 → 20 × 2 = 40 points</li>
+</ul>
 
-2. Install dependencies
-    npm install
+<p><strong>Total = 90 points</strong></p>
 
-3. Start the development server
-    npm run dev
+<hr>
 
-Your app will be available at:
+<h2 id="search-customers">🔍 Search Customers</h2>
 
-👉 http://localhost:5173
+<p>The search bar allows customers to be filtered by name.</p>
 
-📊 Viewing Customers & Reward Points
+<h3>How it works:</h3>
+<ul>
+  <li>Click the search button to execute search</li>
+  <li>Case-insensitive</li>
+  <li>Supports partial matches</li>
+</ul>
 
-When you open the application, you will see the Customers List screen:
-
-Example UI
-
-(replace when screenshot ready)
-
--------------------------
-|  Customer List        |
--------------------------
-| John Doe   | Rewards: 120 |
-| Sarah Lee  | Rewards: 200 |
-| Mike Ross  | Rewards: 75  |
--------------------------
-
-
-Each customer card displays:
-
-Customer Name
-
-Total Reward Points
-
-Button to view detailed transactions
-
-Button to download customer PDF
-
-🧮 Reward Calculation Logic
-
-The reward system follows:
-
-1 point for every dollar spent over $50
-
-2 points for every dollar spent over $100
-
-Example:
-
-Transaction Amount	Points Awarded
-$120	(100–50) ×1 + (120–100) ×2 = 90 points
-$70	(70–50) ×1 = 20 points
-$45	0 points
-
-All customers in /src/data/transactions.js use this calculation.
-
-🔍 Searching Customers
-
-At the top of the page, you'll find the search bar.
-
-How it works:
-
-Type at least one character
-
-List auto-updates
-
-Search is case-insensitive
-
-Exact match, partial match, fuzzy patterns supported
-
-Example:
-
-Typing "jo" will match:
-
-John Carter
-
-Jordan Lee
-
-Joana Smith
-
-Reset Search
-
-A Reset button will appear when search is applied.
-
-Clicking Reset:
-
-Clears the search input
-
-Restores full customer list
-
-Resets pagination to page 1
-
-↕ Sorting Customers
-
-Sorting options are available in the dropdown above customer cards.
-
-Available Sort Options:
-
-Name (A–Z)
-
-Name (Z–A)
-
-Rewards (Low → High)
-
-Rewards (High → Low)
-
-Sorting happens instantly on the list that is currently loaded (search+pagination aware).
-
-📄 PDF Download
-
-Every customer card includes a Download PDF button.
-
-PDF contains:
-
-Customer name
-
-Complete transaction history
-
-Individual transaction amounts
-
-Generated reward points
-
-Total reward summary
-
-PDF is created using jsPDF and automatically downloaded.
-
-📑 Pagination
-
-List of customers is paginated for better UX.
-
-Pagination Features:
-
-✔ Next Page
-✔ Previous Page
-✔ Shows page numbers
-✔ Works seamlessly with Search + Sort
-
-Default:
-
-5 customers per page
-
-When you search or sort, pagination adjusts automatically.
-
-🧪 Running Tests
-
-All test files are located inside:
-
-/tests
-
-
-To execute test suite:
-
-npm run test
-
-
-Includes:
-
-Reward logic tests
-
-Customer component tests
-
-Mocking tests using Vitest and spyOn
-
-Real transaction data from /src/data/transactions.js
-
-🛠 Project Structure
-src/
- ├── components/
- │     ├── CustomerList.jsx
- │     ├── CustomerCard.jsx
- │     ├── RewardLogic.js
- │
- ├── data/
- │     └── transactions.js
- │
- ├── styles/
- │     └── main.css
- │
-tests/
- ├── reward.test.js
- ├── customer.test.js
-
-📥 Build for Production
-npm run build
-
-
-Output is generated in:
-
-dist/
+<h3>Example:</h3>
+<p>Typing <strong>"jo"</strong> will match:</p>
+<ul>
+  <li>John</li>
+  <li>Jordan</li>
+  <li>Joana</li>
+</ul>
+
+<hr>
+
+<h2 id="reset-search">♻ Reset Search</h2>
+
+<p>The reset button will:</p>
+<ul>
+  <li>Clear the search text</li>
+  <li>Show full customer list again</li>
+  <li>Return pagination to page 1</li>
+</ul>
+
+<hr>
+
+<h2 id="sorting-customers">↕ Sorting Customers</h2>
+
+<p>Sorting options include:</p>
+<ul>
+  <li>Name A → Z</li>
+  <li>Name Z → A</li>
+  <li>Rewards Low → High</li>
+  <li>Rewards High → Low</li>
+</ul>
+
+<p>Sorting fully supports:</p>
+<ul>
+  <li>Search</li>
+  <li>Pagination</li>
+</ul>
+
+<hr>
+
+<h2 id="pagination">📑 Pagination</h2>
+
+<p>Pagination allows navigation through customer pages.</p>
+
+<ul>
+  <li>Next Page</li>
+  <li>Previous Page</li>
+  <li>Page number indicators</li>
+</ul>
+
+<p><strong>Default:</strong> 5 customers per page</p>
+
+<hr>
+
+<h2 id="download-pdf">📄 Download PDF</h2>
+
+<p>Each customer card has a <strong>Download PDF</strong> button.</p>
+
+<p>PDF includes:</p>
+<ul>
+  <li>Customer details</li>
+  <li>All transactions</li>
+  <li>Reward per transaction</li>
+  <li>Total reward summary</li>
+</ul>
+
+<hr>
+
+<h2 id="running-tests">🧪 Running Tests</h2>
+
+<p>All tests are placed inside:</p>
+
+<pre><code>/tests</code></pre>
+
+<p>Run test suite:</p>
+
+<pre><code>npm run test</code></pre>
+
+<p>Test suite includes:</p>
+<ul>
+  <li>Reward logic tests</li>
+  <li>Customer card tests</li>
+  <li>Mocking with Vitest</li>
+  <li>Real data tests from <code>src/data/transactions.js</code></li>
+</ul>
+
+<hr>
+
+<h2 id="project-structure">📂 Project Structure</h2>
+
+<pre>
+project/
+│
+├── src/
+│   ├── components/
+│   │   ├── CustomerList.jsx
+│   │   ├── CustomerCard.jsx
+│   │   ├── RewardLogic.js
+│   │
+│   ├── data/
+│   │   └── transactions.js
+│   │
+│   ├── styles/
+│   │   └── main.css
+│
+├── tests/
+│   ├── reward.test.js
+│   ├── customer.test.js
+│
+├── README.md
+└── package.json
+</pre>
+
+<hr>
+
+<h2>🎉 You're Ready to Use the App!</h2>
+</body>
 </html>
-
