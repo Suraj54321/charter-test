@@ -1,14 +1,13 @@
 # charter-test
-
-✔ View customers and their monthly reward points
-✔ Search customers by name
-✔ Sort customers by total rewards or alphabetical order
-✔ Pagination with next/previous navigation
-✔ Export individual customer transactions as a downloadable PDF
-✔ Fully tested using Vitest with mocked data
-✔ Reward points calculated based on business logic
-✔ Clean UI with responsive layout
-
+<html>
+            <li>View customers and their monthly reward points</li>
+            <li> Search customers by name</li>
+            <li>Sort customers by total rewards or alphabetical order</li>
+            <li>Pagination with next/previous navigation</li>
+            <li>Export individual customer transactions as a downloadable PDF</li>
+            <li>Fully tested using Vitest with mocked data</li>
+            <li>Reward points calculated based on business logic</li>
+            <li>Clean UI with responsive layout</li>
 
 🚀 Getting Started
 
@@ -203,6 +202,5 @@ npm run build
 Output is generated in:
 
 dist/
-
-
+</html>
 
