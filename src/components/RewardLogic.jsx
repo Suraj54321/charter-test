@@ -1,3 +1,4 @@
+//Calculating reward point for card
 export function calculateReward(amount) {
   if (amount <= 50) return 0;
 
@@ -24,6 +25,7 @@ export function formatMonth(dateStr) {
   return d.toLocaleString("en-US", { month: "short", year: "numeric" });
 }
 
+// calculating reward point for monthly tab
 export function calculateMonthlyRewards(transactions) {
   const monthly = {};
 

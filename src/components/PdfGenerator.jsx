@@ -32,7 +32,6 @@ export default function PdfGenerator({ customer }) {
     doc.text("Customer Reward Report", 14, 15);
 
     // Customer Details
-    const totalRewards = getTotalRewards(customer.transactions);
     doc.setFontSize(12);
     doc.text(`Customer Name: ${customer.name}`, 14, 30);
     doc.text(`Customer ID: ${customer.id}`, 14, 38);
