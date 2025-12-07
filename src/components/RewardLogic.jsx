@@ -18,3 +18,26 @@ export function calculateReward(amount) {
 export function getTotalRewards(transactions) {
   return transactions.reduce((sum, t) => sum + calculateReward(t.amount), 0);
 }
+
+export function formatMonth(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleString("en-US", { month: "short", year: "numeric" });
+}
+
+export function calculateMonthlyRewards(transactions) {
+  const monthly = {};
+
+  transactions.forEach(t => {
+    const month = formatMonth(t.date);
+
+    let pts = 0;
+    if (t.amount > 100) pts += (t.amount - 100) * 2;
+    if (t.amount > 50) pts += 50;
+
+    if (!monthly[month]) monthly[month] = 0;
+    monthly[month] += pts;
+  });
+
+  return monthly;
+}
+

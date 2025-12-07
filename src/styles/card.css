@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .card {
@@ -34,7 +35,7 @@
   font-size: 22px;
 }
 
-.view-btn {
+/* .view-btn {
   padding: 6px 12px;
   margin-top: 6px;
   border: none;
@@ -42,43 +43,38 @@
   color: white;
   border-radius: 6px;
   cursor: pointer;
-}
+} */
 
-/* MODAL */
-.modal-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
+.button-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 10px; /* Add space between buttons */
+  margin-top: 10px;
 }
 
-.modal {
-  width: 420px;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.modal table {
-  width: 100%;
-  margin-top: 12px;
-  border-collapse: collapse;
-}
-
-.modal table td,
-.modal table th {
-  padding: 6px;
-  border-bottom: 1px solid #ccc;
-}
-
-.close-btn {
-  margin-top: 12px;
-  padding: 8px 14px;
-  border: none;
-  background: red;
-  color: white;
+/* Optional: additional spacing if needed */
+.button-row button {
+  padding: 6px 14px;
   border-radius: 6px;
+  border: none;
   cursor: pointer;
 }
+
+.view-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.download-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #0056b3;
+}
+
+.download-btn:hover {
+  background-color: #1e7e34;
+}
+
+

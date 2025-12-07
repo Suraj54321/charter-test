@@ -1,0 +1,74 @@
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { getTotalRewards } from "./RewardLogic";
+
+export default function PdfGenerator({ customer }) {
+
+  // Reward calculation per transaction
+  const calculateReward = (amount) => {
+    let points = 0;
+    if (amount > 100) {
+      points += (amount - 100) * 2 + 50; // 50 points for $50-$100
+    } else if (amount > 50) {
+      points += amount - 50;
+    }
+    return points;
+  };
+
+  // Format date: 2025-01-25 → 25-Jan-2025
+  const formatDate = (dateStr) => {
+    const d = new Date(dateStr);
+    const day = d.getDate();
+    const month = d.toLocaleString("default", { month: "short" }); // Jan, Feb, ...
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(18);
+    doc.text("Customer Reward Report", 14, 15);
+
+    // Customer Details
+    const totalRewards = getTotalRewards(customer.transactions);
+    doc.setFontSize(12);
+    doc.text(`Customer Name: ${customer.name}`, 14, 30);
+    doc.text(`Customer ID: ${customer.id}`, 14, 38);
+    doc.text(`Total Transactions: ${customer.transactions.length}`, 14, 46);
+
+    // Table Data
+    const rows = customer.transactions.map(t => [
+      t.id,
+      customer.name,
+      `$${t.amount}`,
+      calculateReward(t.amount),
+      t.date ? formatDate(t.date) : "-" // formatted date
+    ]);
+
+    // Totals
+    const totalAmount = customer.transactions.reduce((sum, t) => sum + t.amount, 0);
+    const totalRewardPoints = customer.transactions.reduce(
+      (sum, t) => sum + calculateReward(t.amount),
+      0
+    );
+
+    // Generate Table
+    autoTable(doc, {
+      startY: 65,
+      head: [["Transaction ID", "Customer", "Value ($)", "Reward", "Date"]],
+      body: rows
+    });
+
+    // Footer Totals
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.text(`Total Transaction Value: $${totalAmount}`, 14, finalY);
+    doc.text(`Total Reward Points: ${totalRewardPoints}`, 14, finalY + 10);
+
+    // Save PDF
+    doc.save(`${customer.name}_reward_report.pdf`);
+  };
+
+  return generatePDF;
+}

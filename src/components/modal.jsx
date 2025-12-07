@@ -1,38 +1,134 @@
-import { calculateReward } from "./RewardLogic";
-import "./../styles/card.css";
+import React, { useState } from "react";
+import "./../styles/modal.css"
+import { calculateMonthlyRewards, formatMonth } from "./RewardLogic"
 
 export default function Modal({ customer, onClose }) {
   if (!customer) return null;
+  const [activeTab, setActiveTab] = useState("transactions");
+  const monthlyRewards = calculateMonthlyRewards(customer.transactions);
+
+  // For sorting
+  const [sortConfig, setSortConfig] = useState({
+    key: "month",
+    direction: "asc",
+  });
+
+  // Convert monthlyRewards object → array
+  const monthlyArray = Object.entries(monthlyRewards).map(([month, points]) => ({
+    month,
+    points,
+  }));
+
+// Sorting logic
+  const sortedMonthlyRewards = [...monthlyArray].sort((a, b) => {
+    if (sortConfig.key === "month") {
+      const dateA = new Date(a.month);
+      const dateB = new Date(b.month);
+
+      return sortConfig.direction === "asc"
+        ? dateA - dateB
+        : dateB - dateA;
+    }
+
+    if (sortConfig.key === "points") {
+      return sortConfig.direction === "asc"
+        ? a.points - b.points
+        : b.points - a.points;
+    }
+  });
+
+  // Toggle sort
+  const toggleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction:
+        prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  };
+
+  // Sort icons
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return "↕";
+    return sortConfig.direction === "asc" ? "▲" : "▼";
+  };
+
 
   return (
-    <div className="modal-bg">
-      <div className="modal">
-        <h2>{customer.name}</h2>
-        <p>ID: {customer.id}</p>
+    <div className="modal-overlay">
+      <div className="modal-container">
+        <div className="modal-header">
+          <h2>{customer.name}</h2>
+          <button className="close-btn" onClick={onClose}>×</button>
+        </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Txn ID</th>
-              <th>Amount ($)</th>
-              <th>Reward Points</th>
-            </tr>
-          </thead>
+        {/* Tabs */}
+        <div className="tab-header">
+          <button 
+            className={activeTab === "transactions" ? "active" : ""} 
+            onClick={() => setActiveTab("transactions")}
+          >
+            Transactions
+          </button>
 
-          <tbody>
-            {customer.transactions.map(txn => (
-              <tr key={txn.id}>
-                <td>{txn.id}</td>
-                <td>${txn.amount}</td>
-                <td>{calculateReward(txn.amount)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          <button 
+            className={activeTab === "monthly" ? "active" : ""} 
+            onClick={() => setActiveTab("monthly")}
+          >
+            Monthly Rewards
+          </button>
+        </div>
 
-        <button className="close-btn" onClick={onClose}>
-          Close
-        </button>
+        {/* Tab Content */}
+        <div className="tab-content">
+          
+          {activeTab === "transactions" && (
+            <table className="styled-table">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Amount ($)</th>
+                  <th>Month</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customer.transactions.map((t) => (
+                  <tr key={t.id}>
+                    <td>{t.id}</td>
+                    <td>${t.amount}</td>
+                    <td>{formatMonth(t.date)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {activeTab === "monthly" && (
+            <table className="styled-table">
+              <thead>
+                <tr>
+                  <th onClick={() => toggleSort("month")}>
+                    Month {getSortIcon("month")}
+                  </th>
+                  <th onClick={() => toggleSort("points")}>
+                    Reward Points {getSortIcon("points")}
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {sortedMonthlyRewards.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.month}</td>
+                    <td><strong>{item.points}</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+
+        </div>
+
       </div>
     </div>
   );
