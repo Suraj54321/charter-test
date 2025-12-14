@@ -1,4 +1,5 @@
 import "./../styles/app.css";
+import PropTypes from "prop-types";
 
 export default function Header() {
   return (
@@ -7,3 +8,5 @@ export default function Header() {
     </header>
   );
 }
+
+Header.PropTypes = {}

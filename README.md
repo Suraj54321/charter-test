@@ -13,7 +13,7 @@
 🚀 Getting Started
 
 1. Clone the repository
-    <li><ul>git clone https://github.com/your-repo/reward-dashboard.git</ul></li>
+    <li><ul>git clone https://github.com/Suraj54321/charter-test.git</ul></li>
     cd reward-dashboard
 
 2. Install dependencies

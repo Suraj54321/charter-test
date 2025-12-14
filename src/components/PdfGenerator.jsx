@@ -38,18 +38,18 @@ export default function PdfGenerator({ customer }) {
     doc.text(`Total Transactions: ${customer.transactions.length}`, 14, 46);
 
     // Table Data
-    const rows = customer.transactions.map(t => [
-      t.id,
+    const rows = customer.transactions.map(transaction => [
+      transaction.id,
       customer.name,
-      `$${t.amount}`,
-      calculateReward(t.amount),
-      t.date ? formatDate(t.date) : "-" // formatted date
+      `$${transaction.amount}`,
+      calculateReward(transaction.amount),
+      transaction.date ? formatDate(transaction.date) : "-" // formatted date
     ]);
 
     // Totals
-    const totalAmount = customer.transactions.reduce((sum, t) => sum + t.amount, 0);
+    const totalAmount = customer.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
     const totalRewardPoints = customer.transactions.reduce(
-      (sum, t) => sum + calculateReward(t.amount),
+      (sum, transaction) => sum + calculateReward(transaction.amount),
       0
     );
 
@@ -70,4 +70,20 @@ export default function PdfGenerator({ customer }) {
   };
 
   return generatePDF;
+}
+
+
+PdfGenerator.propTypes = {
+  customer : PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string,PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+    transactions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        amount: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired
+      })
+    ).isRequired
+  }),
+  onClose: PropTypes.func.isRequired
 }

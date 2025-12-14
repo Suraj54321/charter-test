@@ -17,6 +17,7 @@
   "dependencies": {
     "jspdf": "^3.0.4",
     "jspdf-autotable": "^5.0.2",
+    "prop-types": "^15.8.1",
     "react-router-dom": "^7.10.1"
   }
 }

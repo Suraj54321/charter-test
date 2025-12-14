@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { customers } from "./data/transactions";
 import { getTotalRewards } from "./components/RewardLogic";
 import CustomerCard from "./components/customerCard";
-import Modal from "./components/Modal";
+import Modal from "./components/modal";
 import "./styles/app.css";
 import Header from "./components/Header";
 

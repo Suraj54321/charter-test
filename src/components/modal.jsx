@@ -91,11 +91,11 @@ export default function Modal({ customer, onClose }) {
                 </tr>
               </thead>
               <tbody>
-                {customer.transactions.map((t) => (
-                  <tr key={t.id}>
-                    <td>{t.id}</td>
-                    <td>${t.amount}</td>
-                    <td>{formatMonth(t.date)}</td>
+                {customer.transactions.map((transaction) => (
+                  <tr key={transaction.id}>
+                    <td>{transaction.id}</td>
+                    <td>${transaction.amount}</td>
+                    <td>{formatMonth(transaction.date)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -132,4 +132,19 @@ export default function Modal({ customer, onClose }) {
       </div>
     </div>
   );
+}
+
+Modal.propTypes = {
+  customer : PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string,PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+    transactions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        amount: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired
+      })
+    ).isRequired
+  }),
+  onClose: PropTypes.func.isRequired
 }
