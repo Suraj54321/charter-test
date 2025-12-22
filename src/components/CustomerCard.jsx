@@ -2,6 +2,7 @@ import "./../styles/card.css";
 import { getTotalRewards } from "./RewardLogic";
 import PdfGenerator from "./PdfGenerator";
 import PropTypes from "prop-types";
+import React from "react";
 
 export default function CustomerCard({ customer, isTop, onView }) {
   const totalRewards = getTotalRewards(customer.transactions);
@@ -47,5 +48,5 @@ CustomerCard.propTypes = {
   }).isRequired,
   isTop: PropTypes.bool,
   onView: PropTypes.func.isRequired
-}
+};
 

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./../styles/modal.css"
-import { calculateMonthlyRewards, formatMonth } from "./RewardLogic"
+import "./../styles/modal.css";
+import { calculateMonthlyRewards, formatMonth } from "./RewardLogic";
+import PropTypes from "prop-types";
 
 export default function Modal({ customer, onClose }) {
-  if (!customer) return null;
   const [activeTab, setActiveTab] = useState("transactions");
-  const monthlyRewards = calculateMonthlyRewards(customer.transactions);
-
   // For sorting
   const [sortConfig, setSortConfig] = useState({
     key: "month",
     direction: "asc",
   });
 
+  if (!customer) return null;
+  const monthlyRewards = calculateMonthlyRewards(customer.transactions);
   // Convert monthlyRewards object → array
   const monthlyArray = Object.entries(monthlyRewards).map(([month, points]) => ({
     month,
@@ -52,7 +52,6 @@ export default function Modal({ customer, onClose }) {
     return sortConfig.direction === "asc" ? "▲" : "▼";
   };
 
-
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -80,7 +79,6 @@ export default function Modal({ customer, onClose }) {
 
         {/* Tab Content */}
         <div className="tab-content">
-          
           {activeTab === "transactions" && (
             <table className="styled-table">
               <thead>
@@ -125,10 +123,7 @@ export default function Modal({ customer, onClose }) {
               </tbody>
             </table>
           )}
-
-
         </div>
-
       </div>
     </div>
   );
@@ -147,4 +142,4 @@ Modal.propTypes = {
     ).isRequired
   }),
   onClose: PropTypes.func.isRequired
-}
+};

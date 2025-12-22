@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import React,{ render, screen, fireEvent } from '@testing-library/react';
 import CustomerCard from '../src/components/customerCard';
 import * as RewardLogic from '../src/components/RewardLogic';
 import { vi, describe, it, expect } from 'vitest';

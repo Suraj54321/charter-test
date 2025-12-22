@@ -3,18 +3,24 @@
  * @param {number} amount - Transaction amount in dollars 
  * @returns {number} - Calculated reward points
  */
+
+const MIN = 0;
+const MID = 50;
+const MAX = 100;
+const ONE = 1;
+const TWO = 2;
 export function calculateReward(amount) {
-  if (amount <= 50) return 0;
+  if (amount <= MID) return MIN;
 
-  let points = 0;
+  let points = MIN;
 
-  if (amount > 100) {
-    points += (amount - 100) * 2;
-    amount = 100;
+  if (amount > MAX) {
+    points += (amount - MAX) * TWO;
+    amount = MAX;
   }
 
-  if (amount > 50) {
-    points += (amount - 50) * 1;
+  if (amount > MIN) {
+    points += (amount - MIN) * ONE;
   }
 
   return points;
@@ -50,11 +56,11 @@ export function calculateMonthlyRewards(transactions) {
   transactions.forEach(t => {
     const month = formatMonth(t.date);
 
-    let pts = 0;
-    if (t.amount > 100) pts += (t.amount - 100) * 2;
-    if (t.amount > 50) pts += 50;
+    let pts = MIN;
+    if (t.amount > MAX) pts += (t.amount - MAX) * TWO;
+    if (t.amount > MID) pts += MID;
 
-    if (!monthly[month]) monthly[month] = 0;
+    if (!monthly[month]) monthly[month] = MIN;
     monthly[month] += pts;
   });
 
