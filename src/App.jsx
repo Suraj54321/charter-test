@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React,{ useState, useMemo } from "react";
 import { customers } from "./data/transactions";
 import { getTotalRewards } from "./components/RewardLogic";
 import CustomerCard from "./components/customerCard";
@@ -10,13 +10,8 @@ export default function App() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
-
-  // typing value (input field)
   const [searchInput, setSearchInput] = useState("");
-
-  // actual applied search filter (changes only on button click)
   const [searchTerm, setSearchTerm] = useState("");
-
   const isSearching = searchTerm.trim() !== "";
 
   // Highest reward customer
@@ -123,11 +118,11 @@ export default function App() {
 
       {/* CUSTOMER CARDS */}
       <div className="card-container">
-        {currentCustomers.map(c => (
+        {currentCustomers.map(customer => (
           <CustomerCard
-            key={c.id}
-            customer={c}
-            isTop={c.id === topCustomerId}
+            key={customer.id}
+            customer={customer}
+            isTop={customer.id === topCustomerId}
             onView={setSelectedCustomer}
           />
         ))}

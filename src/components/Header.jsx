@@ -1,5 +1,5 @@
 import "./../styles/app.css";
-import PropTypes from "prop-types";
+import React from "react";
 
 export default function Header() {
   return (
@@ -8,5 +8,3 @@ export default function Header() {
     </header>
   );
 }
-
-Header.PropTypes = {}

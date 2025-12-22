@@ -1,21 +1,24 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { getTotalRewards } from "./RewardLogic";
+import PropTypes from "prop-types";
 
+const MIN = 0;
+const MID = 50;
+const MAX = 100;
+const ONE = 1;
+const TWO = 2;
 export default function PdfGenerator({ customer }) {
-
   // Reward calculation per transaction
   const calculateReward = (amount) => {
-    let points = 0;
-    if (amount > 100) {
-      points += (amount - 100) * 2 + 50; // 50 points for $50-$100
-    } else if (amount > 50) {
-      points += amount - 50;
+    let points = MIN;
+    if (amount > MAX) {
+      points += (amount - MAX) * TWO + MID; // 50 points for $50-$100
+    } else if (amount > MID) {
+      points += amount - MID;
     }
     return points;
   };
 
-  // Format date: 2025-01-25 → 25-Jan-2025
   const formatDate = (dateStr) => {
     const d = new Date(dateStr);
     const day = d.getDate();
@@ -86,4 +89,4 @@ PdfGenerator.propTypes = {
     ).isRequired
   }),
   onClose: PropTypes.func.isRequired
-}
+};
